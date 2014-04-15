@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>A Quick Introduction to Haskell</title>
+
+    <meta name="description" content="Describe Me">
+    <meta name="author" content="Timothy Braje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.min.css">
+    <!-- <link rel="stylesheet" href="css/theme/braje.css" id="theme"> -->
+    <link rel="stylesheet" href="reveal.js/css/theme/braje.css" id="theme">
+    <!-- <link rel="stylesheet" href="css/talk-specific.css"> -->
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="highlight/styles/pojoaque.css">
+
+    <!--
+        <link rel="stylesheet" href="css/tomorrow-night-bright.css">
+        <link rel="stylesheet" href="css/ir_black.css">
+        <link rel="stylesheet" href="css/pojoaque.css">
+        <link rel="stylesheet" href="css/tomorrow-night-eighties.css">
+    -->
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section data-background="img/haskell3.jpg">
+        <header>
+          <h1>A Quick Introduction to Haskell</h1>
+          <h5>An Ode to <a href="http://learnyouahaskell.com">Learn You a Haskell</a></h5>
+        </header>
+        <h3 style='padding: 20px;'>Timothy Braje</h3>
+	<footer>
+	  <a href="http://braje.github.io/quick-intro-haskell">http://braje.github.io/quick-intro-haskell</a>
+	</footer>
+      </section>
+<section id="why-haskell" class="slide level1" data-background="img/haskell3.jpg">
+<h1>Why Haskell?</h1>
+<ul>
+<li>purely functional language</li>
+<li>lazy</li>
+<li>statically typed + type inference</li>
+<li>elegant and concise</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<section id="haskell-101" class="level2" data-background="img/haskell3.jpg">
+<h2>Haskell 101</h2>
+</section>
+<section id="interactive-shell-ghci-101" class="level2" data-background="img/haskell3.jpg">
+<h2>Interactive shell (ghci) 101</h2>
+<pre class="haskell"><code>ghci&gt; 40 + 2
+42
+
+ghci&gt; 2 * 21
+42
+
+ghci&gt; 5 / 2
+2.5
+
+ghci&gt; True &amp;&amp; False
+False
+
+ghci&gt; not (True &amp;&amp; True)
+False
+
+ghci&gt; 5 /= 5
+False
+
+ghci&gt; &quot;hello&quot; == &quot;hello&quot;
+True</code></pre>
+</section>
+<section id="interactive-shell-ghci-101-1" class="level2" data-background="img/haskell3.jpg">
+<h2>Interactive shell (ghci) 101</h2>
+<pre class="haskell"><code>ghci&gt; fst (1,2)
+1
+
+ghci&gt; min 9 10
+9
+
+ghci&gt; 40 + 2
+42
+
+ghci&gt; (40::Double) + 2
+42.0
+
+ghci&gt; (40::Double) + (2::Int)
+&lt;interactive&gt;:14:16:
+    Couldn&#39;t match expected type `Double&#39; with actual type `Int&#39;
+    In the second argument of `(+)&#39;, namely `(3 :: Int)&#39;
+    In the expression: (2 :: Double) + (3 :: Int)
+    In an equation for `it&#39;: it = (2 :: Double) + (3 :: Int)
+
+ghci&gt; div 92 10
+9
+
+ghci&gt; 92 `div` 10
+9</code></pre>
+</section>
+<section id="you-can-create-functions-too" class="level2" data-background="img/haskell3.jpg">
+<h2>You can create functions, too</h2>
+<pre class="haskell"><code>doubleMe x = x + x
+
+doubleUs x y = 2*x + 2*y
+
+doubleUs&#39; x y = doubleMe x + doubleMe y
+
+doubleSmallNumber x = if x &gt; 100
+                      then x
+                      else x*2
+
+doubleSmallNumber&#39; x = (if x &gt; 100 then x else x*2) + 1</code></pre>
+</section>
+<section id="cons-lists-are-the-bomb..." class="level2" data-background="img/haskell3.jpg">
+<h2>(Cons) lists are the bomb...</h2>
+<pre class="haskell"><code>ghci&gt; 1:2:3:[]
+[1,2,3]
+
+ghci&gt; head [5,4,3,2,1]
+5
+
+ghci&gt; tail [5,4,3,2,1]
+[4,3,2,1]
+
+ghci&gt; [1,2,3,4] ++ [9,10,11,12]
+[1,2,3,4,9,10,11,12]
+
+ghci&gt; &quot;hello&quot; ++ &quot; &quot; ++ &quot;world&quot;
+&quot;hello world&quot;
+
+ghci&gt; take 10 (cycle [1,2,3])
+[1,2,3,1,2,3,1,2,3,1]
+
+ghci&gt; take 10 (repeat 5)
+[5,5,5,5,5,5,5,5,5,5]</code></pre>
+</section>
+</section>
+<section id="quiz" class="slide level1" data-background="img/haskell3.jpg">
+<h1>Quiz</h1>
+<p>Given: <code>[1,3,5,7,2,5,6,9]</code></p>
+<p>How would I get the 3rd element?</p>
+<div class="fragment">
+<pre class="haskell"><code>head (tail (tail [1,3,5,7,2,5,6,9]))</code></pre>
+</div>
+</section>
+<section class="slide level1">
+
+<section id="types-typeclasses" class="level2" data-background="img/haskell3.jpg">
+<h2>Types &amp; Typeclasses</h2>
+</section>
+<section id="example-types" class="level2" data-background="img/haskell3.jpg">
+<h2>Example Types</h2>
+<p>Within ghci, the type of any expression can be determined with the <code>:t</code> command</p>
+<pre class="haskell"><code>ghci&gt; :t &#39;a&#39;
+&#39;a&#39; :: Char
+
+ghci&gt; :t True
+True :: Bool
+
+ghci&gt; :t &quot;HELLO!&quot;
+&quot;HELLO!&quot; :: [Char]
+
+ghci&gt; :t (True, &#39;a&#39;)
+(True, &#39;a&#39;) :: (Bool, Char)
+
+ghci&gt; :t 4 == 5
+4 == 5 :: Bool</code></pre>
+<pre class="haskell"><code>doubleMe :: Int -&gt; Int
+doubleMe x = 2*x
+
+addThree :: Int -&gt; Int -&gt; Int -&gt; Int
+addThree x y z = x + y + z</code></pre>
+<p>That's a really weird syntax for multi-parameter functions! Let's talk about that later...</p>
+<p>Some core types: Int, Integer, Float, Double, Bool, Char</p>
+</section>
+<section id="type-variables-polymorphic-functions" class="level2" data-background="img/haskell3.jpg">
+<h2>Type variables (Polymorphic Functions)</h2>
+<pre class="haskell"><code>ghci&gt; :t head
+head :: [a] -&gt; a
+
+ghci&gt; :t fst
+fst :: (a, b) -&gt; a</code></pre>
+<p><code>a</code> and <code>b</code> are type variables and can represent any type</p>
+</section>
+<section id="typeclasses" class="level2" data-background="img/haskell3.jpg">
+<h2>Typeclasses</h2>
+<p><strong><em>Kinda like Java interfaces, except awesomer!</em></strong></p>
+<pre class="haskell"><code>ghci&gt; :t (==)
+(==) :: (Eq a) =&gt; a -&gt; a -&gt; Bool</code></pre>
+<pre class="haskell"><code>ghci&gt; :t (&gt;)
+(&gt;) :: (Ord a) =&gt; a -&gt; a -&gt; Bool
+
+ghci&gt; :t succ
+succ :: Enum a =&gt; a -&gt; a</code></pre>
+<p>More examples: Show, Read, Bounded, Num, Integral, Floating</p>
+</section>
+</section>
+<section id="quiz-1" class="slide level1" data-background="img/haskell3.jpg">
+<h1>Quiz</h1>
+<p>Can you guess what the type of (+) is?</p>
+<div class="fragment">
+<pre class="haskell"><code>ghci&gt; :t (+)
+(+) :: Num a =&gt; a -&gt; a -&gt; a</code></pre>
+</div>
+</section>
+<section class="slide level1">
+
+<section id="function-syntax" class="level2" data-background="img/haskell3.jpg">
+<h2>Function syntax</h2>
+</section>
+<section id="pattern-matching" class="level2" data-background="img/haskell3.jpg">
+<h2>Pattern Matching</h2>
+<pre class="haskell"><code>lucky :: (Integral a) =&gt; a -&gt; String
+lucky 7 = &quot;LUCKY NUMBER SEVEN!&quot;
+lucky x = &quot;Sorry, you&#39;re out of luck, pal!&quot;
+
+factorial :: (Integral a) =&gt; a -&gt; a
+factorial 0 = 1
+factorial n = n * factorial (n - 1)</code></pre>
+<h5>
+Be careful now!
+</h5>
+
+<pre class="haskell"><code>charName :: Char -&gt; String
+charName &#39;a&#39; = &quot;Albert&quot;
+charName &#39;b&#39; = &quot;Broseph&quot;
+charName &#39;c&#39; = &quot;Cecil&quot;</code></pre>
+<pre class="haskell"><code>ghci&gt; charName &#39;a&#39;
+&quot;Albert&quot;
+
+ghci&gt; charName &#39;b&#39;
+&quot;Broseph&quot;
+
+ghci&gt; charName &#39;h&#39;
+*** Exception: tut.hs:(53,0)-(55,21): Non-exhaustive patterns in function charName</code></pre>
+</section>
+<section id="lists-can-of-course-be-matched-upon" class="level2" data-background="img/haskell3.jpg">
+<h2>Lists can, of course, be matched upon</h2>
+<pre class="haskell"><code>head&#39; :: [a] -&gt; a
+head&#39; [] = error &quot;No soup for you!&quot;
+head&#39; (x:_) = x
+
+sum&#39; :: (Num a) =&gt; [a] -&gt; a
+sum&#39; [] = 0
+sum&#39; (x:xs) = x + sum&#39; xs</code></pre>
+<p>Keep in mind that <code>:</code> only matches lists with one or more elements!</p>
+</section>
+<section id="guards-or-how-i-learned-to-cope-with-if-else-trees" class="level2" data-background="img/haskell3.jpg">
+<h2>Guards! (or how I learned to cope with if else trees)</h2>
+<pre class="haskell"><code>bigOrSmall :: (RealFloat a) =&gt; a -&gt; a -&gt; String
+bigOrSmall width height
+    | area &lt;= 12.0 = &quot;Tiny&quot;
+    | area &lt;= 21.0 = &quot;Just Right&quot;
+    | area &lt;= 36.0 = &quot;Too Big&quot;
+    | otherwise    = &quot;OMG!&quot;
+    where area = weight * height</code></pre>
+</section>
+<section id="let..." class="level2" data-background="img/haskell3.jpg">
+<h2>Let...</h2>
+<pre class="haskell"><code>cylinder :: (RealFloat a) =&gt; a -&gt; a -&gt; a
+cylinder r h =
+    let sideArea = 2 * pi * r * h
+        topArea  = pi * r^2
+    in  sideArea + 2 * topArea</code></pre>
+<p>In case you missed it, the syntax there is: <code>let &lt;bindings&gt; in &lt;expression&gt;</code>, and that's all I have to say about that!</p>
+</section>
+<section id="case..." class="level2" data-background="img/haskell3.jpg">
+<h2>Case...</h2>
+<pre class="haskell"><code>head&#39; :: [a] -&gt; a
+head&#39; [] = error &quot;No soup for you!&quot;
+head&#39; (x:_) = x
+
+head&#39; :: [a] -&gt; a
+head&#39; xs = case xs of []    -&gt; error &quot;No soup for you!&quot;
+                      (x:_) -&gt; x</code></pre>
+<p>Again, syntax...</p>
+<pre class="haskell"><code>case expression of pattern -&gt; result
+                   pattern -&gt; result
+                   pattern -&gt; result
+                   ...</code></pre>
+</section>
+</section>
+<section id="quiz-2" class="slide level1" data-background="img/haskell3.jpg">
+<h1>Quiz</h1>
+<p>How do you get the third element out of a list?</p>
+<div class="fragment">
+<pre class="haskell"><code>getThrd :: [a] -&gt; a
+getThrd (_:_:x:_) = x
+getThrd _ = error &quot;I don&#39;t have what you are looking for!&quot;</code></pre>
+</div>
+</section>
+<section class="slide level1">
+
+<section id="higher-order-functions" class="level2" data-background="img/haskell3.jpg">
+<h2>Higher order functions</h2>
+<p>Functions taking functions as parameters and/or returning them as return values since 1999...</p>
+<p>Learn to love them, or you might as well just leave right now...</p>
+</section>
+<section id="curried-functions" class="level2" data-background="img/haskell3.jpg">
+<h2>Curried Functions</h2>
+<h5>
+so important they named the language after its inventor!
+</h5>
+
+<pre class="haskell"><code>ghci&gt; max 4 5
+5</code></pre>
+<pre class="haskell"><code>ghci&gt; (max 4) 5
+5</code></pre>
+<p>The space is sort of like an operator (function application) and it has the highest precedence</p>
+<pre class="haskell"><code>max :: (Ord a) =&gt; a -&gt; a -&gt; a</code></pre>
+<pre class="haskell"><code>max :: (Ord a) =&gt; a -&gt; (a -&gt; a)</code></pre>
+</section>
+<section id="partial-function-application" class="level2" data-background="img/haskell3.jpg">
+<h2>Partial Function Application</h2>
+<pre class="haskell"><code>multThree :: (Num a) =&gt; a -&gt; a -&gt; a -&gt; a
+multThree x y z = x * y * z</code></pre>
+<pre class="haskell"><code>ghci&gt; let multTwoWithNine = multThree 9
+ghci&gt; multTwoWithNine 2 3
+54
+
+ghci&gt; let multWithEighteen = multTwoWithNine 2
+ghci&gt; multWithEighteen 10
+180</code></pre>
+<pre class="haskell"><code>compareWithHundred :: (Num a, Ord a) =&gt; a -&gt; Ordering
+compareWithHundred x = compare 100 x
+
+compareWithHundred&#39; :: (Num a, Ord a) =&gt; a -&gt; Ordering
+compareWithHundred&#39; = compare 100
+
+divideByTen :: (Floating a) =&gt; a -&gt; a
+divideByTen = (/10)</code></pre>
+</section>
+<section id="ready-for-some-higher-orderism" class="level2" data-background="img/haskell3.jpg">
+<h2>Ready for some higher-orderism?</h2>
+<pre class="haskell"><code>applyTwice :: (a -&gt; a) -&gt; a -&gt; a
+applyTwice f x = f (f x)
+
+ghci&gt; applyTwice (+3) 10
+16
+
+ghci&gt; applyTwice (++ &quot; world&quot;) &quot;Hello&quot;
+&quot;Hello world world&quot;
+
+ghci&gt; applyTwice (&quot;world &quot; ++) &quot;Hello&quot;
+&quot;world world Hello&quot;
+
+ghci&gt; applyTwice (3:) [1]
+[3,3,1]</code></pre>
+</section>
+<section id="of-maps-..." class="level2" data-background="img/haskell3.jpg">
+<h2>Of maps ...</h2>
+<pre class="haskell"><code>map :: (a -&gt; b) -&gt; [a] -&gt; [b]
+map _ [] = []
+map f (x:xs) = f x : map f xs
+
+ghci&gt; map (+3) [1,5,3,1,6]
+[4,8,6,4,9]
+
+ghci&gt; map (++ &quot;!&quot;) [&quot;nice&quot;, &quot;to&quot;, &quot;see&quot;, &quot;you&quot;]
+[&quot;nice!&quot;,&quot;to!&quot;,&quot;see!&quot;,&quot;you!&quot;]
+
+ghci&gt; map fst [(1,2),(3,5),(6,3),(2,6),(2,5)]
+[1,3,6,2,2]</code></pre>
+</section>
+<section id="and-filters" class="level2" data-background="img/haskell3.jpg">
+<h2>... and filters</h2>
+<pre class="haskell"><code>filter :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+filter _ [] = []
+filter p (x:xs)
+    | p x       = x : filter p xs
+    | otherwise = filter p xs
+
+ghci&gt; filter (&gt; 3) [1,5,3,2,1,6,4,3,2,1]
+[5,6,4]
+
+ghci&gt; filter (== 3) [1,2,3,4,5]
+[3]</code></pre>
+</section>
+<section id="lambdas" class="level2" data-background="img/haskell3.jpg">
+<h2>Lambdas</h2>
+<pre class="haskell"><code>ghci&gt; map (\x -&gt; x + 3) [1,6,3,2]
+[4,9,6,5]
+
+ghci&gt; map (+3) [1,6,3,2]
+[4,9,6,5]
+
+ghci&gt; map (\(a,b) -&gt; a + b) [(1,2),(3,5),(6,3),(2,6),(2,5)]
+[3,8,9,8,7]</code></pre>
+</section>
+</section>
+<section id="quiz-3" class="slide level1" data-background="img/haskell3.jpg">
+<h1>Quiz</h1>
+<p>Write <code>partition</code> (like you need for quicksort)</p>
+<pre class="haskell"><code>partition :: (Ord a) =&gt; a -&gt; [a] -&gt; ([a],[a])</code></pre>
+<div class="fragment">
+<pre class="haskell"><code>partition :: (Ord a) =&gt; a -&gt; [a] -&gt; ([a],[a])
+partition x xs = ( filter (&lt; x) xs, filter (&gt;=  x) xs )</code></pre>
+</div>
+</section>
+<section class="slide level1">
+
+<section id="folds" class="level2" data-background="img/haskell3.jpg">
+<h2>Folds</h2>
+<p>Good for computing something based on a traversal</p>
+</section>
+<section id="left-or-right" class="level2" data-background="img/haskell3.jpg">
+<h2>Left or right?</h2>
+<pre class="haskell"><code>sum&#39; :: (Num a) =&gt; [a] -&gt; a
+sum&#39; xs = foldl (+) 0 xs</code></pre>
+<pre class="haskell"><code>map&#39; :: (a -&gt; b) -&gt; [a] -&gt; [b]
+map&#39; f xs = foldr (\x acc -&gt; f x : acc) [] xs</code></pre>
+<p>So, left folds associate to the left, and right folds to the right.</p>
+<pre class="haskell"><code>foldl f z [a,b,c] = (f (f (f z a) b) c)</code></pre>
+<pre class="haskell"><code>foldr f z [a,b,c] = (f a (f b (f c z)))</code></pre>
+</section>
+<section id="function-application" class="level2" data-background="img/haskell3.jpg">
+<h2>Function application</h2>
+<pre class="haskell"><code>($) :: (a -&gt; b) -&gt; a -&gt; b
+f $ x = f x</code></pre>
+<p>What the...!?!?!?!?!</p>
+<p>(space) highest precedence, left associative</p>
+<p>($) lowest precedence, right associative</p>
+<pre class="haskell"><code>f (g (z x)) = f $ g $ z x</code></pre>
+<pre class="haskell"><code>f a b c = (((f a) b) c)</code></pre>
+</section>
+</section>
+<section id="quiz-4" class="slide level1" data-background="img/haskell3.jpg">
+<h1>Quiz</h1>
+<p>Reverse a list using fold...</p>
+<pre class="haskell"><code>revList :: [a] -&gt; [a]</code></pre>
+<div class="fragment">
+<pre class="haskell"><code>revList :: [a] -&gt; [a]
+revList = foldl (\acc x -&gt; x:acc) []</code></pre>
+</div>
+<div class="fragment">
+<pre class="haskell"><code>revList :: [a] -&gt; [a]
+revList = foldl (flip (:)) []</code></pre>
+</div>
+</section>
+<section class="slide level1">
+
+<section id="algebraic-data-types" class="level2" data-background="img/haskell3.jpg">
+<h2>Algebraic data types</h2>
+<p>We have types and value constructors (well...okay, we'll come back to this)</p>
+<pre class="haskell"><code>data FavLangs = HASKELLL | IDRIS | AGDA
+
+data AssetHolding = Stock String Int Float | MutualFund String Float Float
+
+ghci&gt; :t Stock
+Stock :: String -&gt; Int -&gt; Float -&gt; AssetHolding
+
+ghci&gt; :t MutualFund
+MutualFund :: String -&gt; Float -&gt; Float -&gt; AssetHolding
+
+value :: AssetHolding -&gt; Float
+value (Stock _ s p) = s * p
+value (MutualFund _ s p) = s * p</code></pre>
+</section>
+<section id="recursive-data-structures-mind-blown" class="level2" data-background="img/haskell3.jpg">
+<h2>Recursive data structures (Mind Blown!)</h2>
+<pre class="haskell"><code>data List a = Empty | Cons a (List a)
+              deriving (Show, Read, Eq, Ord)
+
+ghci&gt; Empty
+Empty
+
+ghci&gt; 5 `Cons` Empty
+Cons 5 Empty
+
+ghci&gt; 4 `Cons` (5 `Cons` Empty)
+Cons 4 (Cons 5 Empty)
+
+ghci&gt; 3 `Cons` (4 `Cons` (5 `Cons` Empty))
+Cons 3 (Cons 4 (Cons 5 Empty))</code></pre>
+</section>
+</section>
+<section class="slide level1">
+
+<section id="types-typeclasses-102" class="level2" data-background="img/haskell3.jpg">
+<h2>Types &amp; Typeclasses 102</h2>
+</section>
+<section id="instances" class="level2" data-background="img/haskell3.jpg">
+<h2>Instances</h2>
+<p>Definition of Eq from standard prelude:</p>
+<pre class="haskell"><code>class Eq a where
+  (==) :: a -&gt; a -&gt; Bool
+  (/=) :: a -&gt; a -&gt; Bool
+  x == y = not (x /= y)
+  x /= y = not (x == y)</code></pre>
+<p>In action:</p>
+<pre class="haskell"><code>data FavLangs = HASKELLL | IDRIS | AGDA
+
+instance Eq FavLangs where
+  HASKELL == HASKELL = True
+  IDRIS == IDRIS = True
+  AGDA == AGDA = True
+  _ == _ = False
+
+instance Show FavLangs where
+  show HASKELL = &quot;Haskell&quot;
+  show AGDA    = &quot;Agda&quot;
+  show IDRIS   = &quot;Idris&quot;</code></pre>
+</section>
+<section id="derived-instances" class="level2" data-background="img/haskell3.jpg">
+<h2>Derived Instances</h2>
+<pre class="haskell"><code>data FavLangs = HASKELLL | IDRIS | AGDA
+                deriving (Eq, Ord, Show, Read, Bounded, Enum)
+
+ghci&gt; HASKELL == IDRIS
+False
+
+ghci&gt; AGDA == AGDA
+True
+
+ghci&gt; [HASKELL .. AGDA]
+[HASKELL, IDRIS, AGDA]</code></pre>
+</section>
+
+<section data-background="img/haskell3.jpg">
+<p>
+Hey, I just met you, And this is crazy, But here's my number,
+</p><h1>
+So call me, Maybe?
+</h1>
+
+<pre class="haskell"><code>data Maybe a = Nothing | Just a</code></pre>
+<p>We have types, type constructors, &amp; value constructors</p>
+</section>
+<section id="ghci-maybe" class="level2" data-background="img/haskell3.jpg">
+<h2>Ghci, Maybe?</h2>
+<pre class="haskell"><code>ghci&gt; Just &quot;Awesome&quot;
+Just &quot;Awesome&quot;
+
+ghci&gt; Just 42
+Just 42
+
+ghci&gt; :t Just &quot;Awesome&quot;
+Just &quot;Awesome&quot; :: Maybe [Char]
+
+ghci&gt; :t Just 42
+Just 42 :: (Num t) =&gt; Maybe t
+
+ghci&gt; :t Nothing
+Nothing :: Maybe a</code></pre>
+</section>
+<section id="eq-maybe" class="level2" data-background="img/haskell3.jpg">
+<h2>Eq, Maybe?</h2>
+<pre class="haskell"><code>instance Eq Maybe where
+    ...
+
+class Eq a where
+    (==) :: a -&gt; a -&gt; Bool
+    (/=) :: a -&gt; a -&gt; Bool
+    x == y = not (x /= y)
+    x /= y = not (x == y)</code></pre>
+<p>Maybe isn't a type!</p>
+</section>
+<section id="just-add-a-type-parameter-maybe" class="level2" data-background="img/haskell3.jpg">
+<h2>Just add a type parameter, Maybe?</h2>
+<pre class="haskell"><code>instance Eq (Maybe m) where
+    Just x  == Just y  = x == y
+    Nothing == Nothing = True
+    _ == _             = False</code></pre>
+<p>Still not right...</p>
+</section>
+<section id="the-type-parameter-should-be-equatable-maybe" class="level2" data-background="img/haskell3.jpg">
+<h2>The type parameter should be equatable, Maybe?</h2>
+<pre class="haskell"><code>instance (Eq m) =&gt; Eq (Maybe m) where
+    Just x  == Just y  = x == y
+    Nothing == Nothing = True
+    _ == _             = False</code></pre>
+</section>
+</section>
+<section class="slide level1">
+
+<section id="io" class="level2" data-background="img/haskell3.jpg">
+<h2>IO</h2>
+</section>
+<section id="hello-world" class="level2" data-background="img/haskell3.jpg">
+<h2>Hello World!</h2>
+<pre class="haskell"><code>main = putStrLn &quot;Hello, World!&quot;</code></pre>
+</section>
+<section id="hello-world-with-a-type-signature-this-time" class="level2" data-background="img/haskell3.jpg">
+<h2>Hello World! (with a type signature this time)</h2>
+<pre class="haskell"><code>main :: IO ()
+main = putStrLn &quot;Hello, World!&quot;</code></pre>
+<pre class="haskell"><code>putStrLn :: String -&gt; IO ()</code></pre>
+</section>
+<section id="is-there-an-echo-in-here" class="level2" data-background="img/haskell3.jpg">
+<h2>Is There An Echo In Here?</h2>
+<pre class="haskell"><code>main :: IO ()
+main = do
+  putStrLn &quot;Tell me something interesting&quot;
+  answer &lt;- getLine
+  putStrLn $ &quot;I am also interested in &quot; ++ answer</code></pre>
+<pre class="haskell"><code>getLine :: IO String</code></pre>
+<p>...And They Said Haskell Couldn't Have Side Effects</p>
+</section>
+<section id="no-really-this-is-completely-legit" class="level2" data-background="img/haskell3.jpg">
+<h2>No, Really, This Is Completely Legit</h2>
+<p>What we are doing here is creating IO Actions that may or may not get executed by the runtime</p>
+</section>
+<section id="let-bindings-for-pure-values" class="level2" data-background="img/haskell3.jpg">
+<h2>Let Bindings for pure values</h2>
+<pre class="haskell"><code>main = do
+  putStrLn &quot;Please give me stuff to capitalize&quot;
+  line &lt;- getLine
+  let caps = map toUpper line
+  putStrLn caps</code></pre>
+</section>
+<section id="putting-it-all-together" class="level2" data-background="img/haskell3.jpg">
+<h2>Putting It All Together</h2>
+<pre class="haskell"><code>main = do 
+  putStrLn &quot;Please give me stuff to capitalize, empty line to quit&quot;
+  line &lt;- getLine
+  if null line
+    then return ()
+    else do putStrLn $ map toUpper line
+            main</code></pre>
+</section>
+</section>
+<section id="thanks-for-listening" class="slide level1" data-background="img/haskell3.jpg">
+<h1>Thanks for listening!</h1>
+</section>
+    </div> <!-- end of reveal -->
+  </div>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.min.js"></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        rollingLinks: false,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'zoom', // default/cube/page/concave/zoom/linear/fade/none
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        // width: 1920, //1280,
+        // height: 1080, //1024,
+        width: 1280,
+        height: 1024,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.05,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.5,
+        maxScale: 2.0,
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal.js/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'highlight/highlight.pack.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+//          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]});
+    </script>
+    <script>
+//      ("section").attr('data-background','img/haskell3.jpg');
+    </script>
+</body>
+</html>
