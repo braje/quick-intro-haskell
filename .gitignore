@@ -1,0 +1,5 @@
+*~
+*.html
+
+reveal.js/node_modules/
+reveal.js/.sass-cache

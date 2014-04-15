@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>$title$</title>
+
+    <meta name="description" content="Describe Me">
+    <meta name="author" content="Timothy Braje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.min.css">
+    <!-- <link rel="stylesheet" href="css/theme/braje.css" id="theme"> -->
+    <link rel="stylesheet" href="reveal.js/css/theme/braje.css" id="theme">
+    <!-- <link rel="stylesheet" href="css/talk-specific.css"> -->
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="highlight/styles/pojoaque.css">
+
+    <!--
+        <link rel="stylesheet" href="css/tomorrow-night-bright.css">
+        <link rel="stylesheet" href="css/ir_black.css">
+        <link rel="stylesheet" href="css/pojoaque.css">
+        <link rel="stylesheet" href="css/tomorrow-night-eighties.css">
+    -->
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section data-background="img/haskell3.jpg">
+        <header>
+          <h1>$title$</h1>
+          $if(subtitle)$<h5>$subtitle$</h5>$endif$
+        </header>
+        <h3 style='padding: 20px;'>$author$</h3>
+	<footer>
+	  $date$
+	</footer>
+      </section>
+$body$
+    </div> <!-- end of reveal -->
+  </div>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.min.js"></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        rollingLinks: false,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'zoom', // default/cube/page/concave/zoom/linear/fade/none
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        // width: 1920, //1280,
+        // height: 1080, //1024,
+        width: 1280,
+        height: 1024,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.05,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.5,
+        maxScale: 2.0,
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'js/classList.js', condition: function() { return !document.body.classList; } },
+//          { src: 'plugin/highlight/highlight-7.3.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'highlight/highlight.pack.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+//          { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+//          { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]});
+    </script>
+    <script>
+//      ("section").attr('data-background','img/haskell3.jpg');
+    </script>
+</body>
+</html>

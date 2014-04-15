@@ -1,0 +1,60 @@
+.boxed {
+    background: rgba(0,0,0,.50);
+    margin: 1em;
+}
+
+.boxed-light {
+    background: rgba(0,0,0,.25);
+    margin: 1em;
+}
+
+.boxed-dark {
+    background: rgba(0,0,0,.75);
+    margin: 1em;
+}
+
+.reveal section img.framed {
+    background: white;
+    padding: 1em;}
+
+span.yes {
+    color: green;
+    font-weight: bold;
+}
+
+span.no {
+    color: darkred;
+    font-weight: bold;
+}
+
+.reveal .distribution {
+    font-family: Arial,serif;
+    width: 80%;
+    padding: 5px;
+    margin: 2em auto;
+    border: 1px solid white;
+    font-size: 0.4em;
+}
+
+.reveal dl {
+    /*border: 3px double #ccc;*/
+    padding: 0.5em;
+    text-align: left;
+}
+.reveal dt {
+    float: left;
+    clear: left;
+    width: 8em;
+    text-align: right;
+    font-weight: bold;
+    color: #ae81ff;
+    padding-right: 0.5em;
+}
+.reveal dt:after {
+    content: ":";
+}
+
+.reveal dd {
+    margin: 0 0 0 110px;
+    padding: 0 0 0.5em 0;
+}
