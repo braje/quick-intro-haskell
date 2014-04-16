@@ -545,8 +545,7 @@ value (MutualFund _ s p) = s * p
 ## Recursive data structures (Mind Blown!) {data-background="img/haskell3.jpg"}
 
 ```haskell
-data List a = Empty | Cons a (List a)
-              deriving (Show, Read, Eq, Ord)
+data List = Empty | Cons Int List
 
 ghci> Empty
 Empty
